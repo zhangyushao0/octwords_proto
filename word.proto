@@ -1,0 +1,16 @@
+syntax = "proto3";
+package word;
+
+service Word {
+    rpc getWord(WordRequest) returns (WordReply) {}
+}
+
+message WordRequest {
+    uint32 id = 1;
+}
+
+message WordReply {
+    string word = 1;
+    string definition = 2;
+    string example = 3;
+}
