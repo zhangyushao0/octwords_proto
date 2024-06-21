@@ -3,13 +3,38 @@ package word;
 
 service Word {
   rpc getWord(WordRequest) returns (WordReply) {}
+  rpc startNewLearn(NewLearnRequest) returns (NewLearnReply) {}
+  rpc finishLearn(FinishLearnRequest) returns (FinishLearnReply) {}
 }
 
 message WordRequest { uint32 id = 1; }
 
-message WordReply {
-  string word = 1;
-  string definition = 2;
-  string translation = 3;
-  repeated string tag = 4;
+message WordReply { WordInner word = 1; }
+
+message WordInner {
+  uint32 id = 1;
+  string word = 2;
+  string definition = 3;
+  string translation = 4;
+  repeated string tag = 5;
+  string extended_blocks = 6;
 }
+
+message NewLearnRequest { uint32 number = 1; }
+
+message NewLearnReply {
+  repeated WordInner words = 1;
+  string eventId = 2;
+}
+
+message WordLearnInner {
+  uint32 id = 1;
+  uint32 wrong_count = 2;
+}
+
+message FinishLearnRequest {
+  string eventId = 1;
+  repeated WordLearnInner words = 2;
+}
+
+message FinishLearnReply {}
